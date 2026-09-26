@@ -53,8 +53,12 @@ raw_datasets["validation"] = raw_datasets["validation"].select(range((int)(len(r
 print("train : ",len(raw_datasets["train"]))
 print("validation : ",len(raw_datasets["validation"]))
 
+print(vars(args))
+print(torch.__version__)
 device = "cuda" if(torch.cuda.is_available()) else "cpu"
-print(device)
+if device == "cuda":
+    print(torch.cuda.get_device_name(0))
+    print(torch.cuda.get_device_properties(0))
 
 model_checkpoint = "google-bert/bert-base-uncased"
 tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
@@ -235,7 +239,6 @@ val_loader = DataLoader(
     pin_memory=True,
 )
 
-dummy  = next(iter(train_loader))
 
 
 model = AutoModelForQuestionAnswering.from_pretrained(model_checkpoint).to(device)
@@ -271,8 +274,8 @@ def evaluate_model(model, loader):
 train_loss_record = []
 val_loss_record = []
 
-if os.path.exists("./checkpoint.pt"):
-  ckte = torch.load("./checkpoint.pt")
+if os.path.exists(args.ckpt_path):
+  ckte = torch.load(args.ckpt_path)
   model.load_state_dict(ckte["model"])
   optimizer.load_state_dict(ckte["optimizer"])
   scaler.load_state_dict(ckte["scaler"])
@@ -281,28 +284,42 @@ if os.path.exists("./checkpoint.pt"):
 else:
   epoch_start = 0
   print("no checkpoint, starting fresh")
-start_time = time.time()
+
+total_train_time = 0.0
+total_eval_time = 0.0
+peak_mem = 0 
+
 for epoch in tqdm(range(epoch_start, args.epochs)):
   train_loss_batch = 0
   n = 0
-  epoch_time_start = time.time()
+  epoch_train_start = time.time()
+  torch.cuda.reset_peak_memory_stats()
   for batch in train_loader:
     batch = {k: v.to(device) for k, v in batch.items()}
     size = batch["input_ids"].shape[0]
     loss = train_step(model, optimizer, batch)
     train_loss_batch += loss *size
     n+= size
-  epoch_time_end = time.time()
+  epoch_train_end = time.time()
+  if (torch.cuda.max_memory_allocated() > peak_mem):
+     peak_mem = torch.cuda.max_memory_allocated() 
+  total_train_time += epoch_train_end- epoch_train_start
   train_loss_record.append(train_loss_batch / n)
 
+  epoch_eval_start = time.time()
   start_logits, end_logits = evaluate_model(model, val_loader)
   metrics = compute_metrics(start_logits, end_logits, validation_dataset, raw_datasets["validation"])
+  epoch_eval_end = time.time()
+
+  total_eval_time += epoch_eval_end - epoch_eval_start
 
   print(f"===== Epoch {epoch}/{args.epochs-1} =====")
   print(f"Loss: {train_loss_record[-1]:.4f}") 
-  print(f"Epoch {epoch} training time: {epoch_time_end - epoch_time_start:.2f} seconds")
+  print(f"Epoch {epoch} training time: {epoch_train_end- epoch_train_start:.2f} seconds, eval time: {epoch_eval_end- epoch_eval_start:.2f}")
   print(f"EM: {metrics['exact_match']:.4f}, F1: {metrics['f1']:.4f}")  
 
   if epoch%2 == 0 or epoch  == args.epochs - 1 :
    torch.save({"model": model.state_dict(), "epoch": epoch, "optimizer": optimizer.state_dict(), "scaler": scaler.state_dict()}, args.ckpt_path)
-print(f"Total training time: {(time.time() - start_time):.2f} seconds")
+print(f"Total training time: {(total_train_time):.2f} seconds")
+print(f"Total eval time: {(total_eval_time):.2f} seconds")
+print(f"peak GPU memory: {peak_mem / 1024**3} GB")
