@@ -39,6 +39,10 @@ def parse_args():
     parser.add_argument("--ckpt-path", type=str, default=None, help="checkpoint path (default: $STORE/checkpoints/<log-dir name>/checkpoint.pt)")
     parser.add_argument("--log-dir", type=str, default="./runs/test", help="TensorBoard log folder")
     parser.add_argument("--log-every", type=int, default=20, help="log train loss every N steps")
+    parser.add_argument("--num-workers", type=int, default=0)
+    parser.add_argument("--compile", action="store_true")
+    parser.add_argument("--profile", action="store_true")
+    parser.add_argument("--warmup-steps", type=int, default=50)
     return parser.parse_args()
 args = parse_args()
 
@@ -238,6 +242,8 @@ train_loader = DataLoader(
     shuffle=True,             # shuffle for stochastic training
     batch_size=args.batch_size,
     pin_memory=True,          # speeds up GPU transfers
+    num_workers=args.num_workers,
+    persistent_workers=args.num_workers > 0,
 )
 
 # Create DataLoader for model input
@@ -246,12 +252,15 @@ val_loader = DataLoader(
     shuffle=False,            # don't shuffle during validation
     batch_size=args.batch_size,
     pin_memory=True,
+    num_workers=args.num_workers,
+    persistent_workers=args.num_workers > 0,
 )
 
 
 
-model = AutoModelForQuestionAnswering.from_pretrained(model_checkpoint).to(device)
-optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr)
+raw_model = AutoModelForQuestionAnswering.from_pretrained(model_checkpoint).to(device)
+model = torch.compile(raw_model) if args.compile else raw_model
+optimizer = torch.optim.AdamW(raw_model.parameters(), lr=args.lr)
 
 def train_step(model, optimizer, batch):
   model.train()
@@ -265,7 +274,7 @@ def train_step(model, optimizer, batch):
   scaler.step(optimizer)
   scaler.update()
 
-  return loss.item()
+  return loss.detach()
 
 def evaluate_model(model, loader):
     model.eval()
@@ -285,7 +294,7 @@ val_loss_record = []
 
 if os.path.exists(args.ckpt_path):
     ckte = torch.load(args.ckpt_path, map_location="cpu")
-    model.load_state_dict(ckte["model"])
+    raw_model.load_state_dict(ckte["model"])
     optimizer.load_state_dict(ckte["optimizer"])
     scaler.load_state_dict(ckte["scaler"])
     epoch_start = ckte["epoch"] + 1
@@ -298,32 +307,61 @@ else:
 
 total_train_time = 0.0
 total_eval_time = 0.0
-peak_mem = 0 
+peak_mem = 0
 writer = SummaryWriter(log_dir=args.log_dir, purge_step=global_step)
+
+if args.profile:
+    from torch.profiler import profile, schedule, ProfilerActivity
+    it = iter(train_loader)
+    with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA],
+                 schedule=schedule(wait=5, warmup=2, active=5),
+                 record_shapes=True) as prof:
+        for _ in range(12):
+            batch = {k: v.to(device) for k, v in next(it).items()}
+            train_step(model, optimizer, batch)
+            prof.step()
+    print(prof.key_averages().table(sort_by="cuda_time_total", row_limit=15))
+    prof.export_chrome_trace(os.path.join(args.log_dir, "trace.json"))
+    raise SystemExit
 
 os.makedirs(os.path.dirname(args.ckpt_path) or ".", exist_ok=True)
 
 for epoch in tqdm(range(epoch_start, args.epochs)):
-  train_loss_batch = 0
+  train_loss_sum = torch.zeros((), device=device) 
   n = 0
+  step_in_epoch = 0
+  warm_start = None
   epoch_train_start = time.time()
   torch.cuda.reset_peak_memory_stats()
+
+
   for batch in train_loader:
     batch = {k: v.to(device) for k, v in batch.items()}
     size = batch["input_ids"].shape[0]
     loss = train_step(model, optimizer, batch)
+    train_loss_sum += loss *size
+    n+= size
 
     global_step += 1
     if global_step % args.log_every == 0:
-        writer.add_scalar("train/loss_step", loss, global_step)
+        writer.add_scalar("train/loss_step", loss.item(), global_step)
 
-    train_loss_batch += loss *size
-    n+= size
+    step_in_epoch += 1
+    if step_in_epoch == args.warmup_steps:
+        torch.cuda.synchronize()
+        warm_start = time.time()
+        warm_n = n
+  torch.cuda.synchronize()
   epoch_train_end = time.time()
+  if warm_start is not None:
+      throughput = (n - warm_n) / (epoch_train_end - warm_start)
+      print(f"Throughput after warm-up: {throughput:.1f} features/s")
+      writer.add_scalar("train/throughput_after_warmup", throughput, epoch)
+
   if (torch.cuda.max_memory_allocated() > peak_mem):
      peak_mem = torch.cuda.max_memory_allocated() 
   total_train_time += epoch_train_end- epoch_train_start
-  train_loss_record.append(train_loss_batch / n)
+  train_loss_record.append((train_loss_sum / n).item())
 
   epoch_eval_start = time.time()
   start_logits, end_logits = evaluate_model(model, val_loader)
@@ -345,7 +383,7 @@ for epoch in tqdm(range(epoch_start, args.epochs)):
   
   
   if epoch%2 == 0 or epoch  == args.epochs - 1 :
-   torch.save({"model": model.state_dict(), "epoch": epoch,
+   torch.save({"model": raw_model.state_dict(), "epoch": epoch,
                "optimizer": optimizer.state_dict(), "scaler": scaler.state_dict(),
                "global_step": global_step}, args.ckpt_path)
 
