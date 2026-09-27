@@ -30,17 +30,22 @@ import random
 def parse_args():
     parser = argparse.ArgumentParser(description="python training script")
     parser.add_argument("--lr", type=float, default=2e-5, help="learning rate")
-    parser.add_argument("--epochs", type=int, default=1, help="number of epochs")
+    parser.add_argument("--epochs", type=int, default=2, help="number of epochs")
     parser.add_argument("--seed", type=int, default=42, help="random seed")
     parser.add_argument("--batch-size", type=int, default=8, help="batch size")
     parser.add_argument("--data-fraction", type=float, default=1.0, help="percentage of the dataset to use")
     parser.add_argument("--precision", type=str, default="fp32", choices=["fp32", "amp"])    
     parser.add_argument("--data-dir", type=str, default='./data', help="data directory")
-    parser.add_argument("--ckpt-path", type=str, default='./checkpoint.pt', help="checkpoint path")
+    parser.add_argument("--ckpt-path", type=str, default=None, help="checkpoint path (default: $STORE/checkpoints/<log-dir name>/checkpoint.pt)")
     parser.add_argument("--log-dir", type=str, default="./runs/test", help="TensorBoard log folder")
     parser.add_argument("--log-every", type=int, default=20, help="log train loss every N steps")
     return parser.parse_args()
 args = parse_args()
+
+if args.ckpt_path is None:
+    run_name = os.path.basename(os.path.normpath(args.log_dir))
+    args.ckpt_path = os.path.join(os.environ.get("STORE", "."), "checkpoints", run_name, "checkpoint.pt")
+
 
 random.seed(args.seed)
 np.random.seed(args.seed)
