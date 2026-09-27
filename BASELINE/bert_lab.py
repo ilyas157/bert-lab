@@ -132,6 +132,8 @@ train_dataset = raw_datasets["train"].map(
     remove_columns=raw_datasets["train"].column_names,
 )
 
+print("train features:", len(train_dataset))
+
 def preprocess_validation_examples(examples):
     questions = [q.strip() for q in examples["question"]]
     inputs = tokenizer(
@@ -342,6 +344,7 @@ for epoch in tqdm(range(epoch_start, args.epochs)):
                "optimizer": optimizer.state_dict(), "scaler": scaler.state_dict(),
                "global_step": global_step}, args.ckpt_path)
 
+print("")
 print(f"Total training time: {(total_train_time):.2f} seconds")
 print(f"Total eval time: {(total_eval_time):.2f} seconds")
 print(f"peak GPU memory: {peak_mem / 1024**3:.2f} GB")
