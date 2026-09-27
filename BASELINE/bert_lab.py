@@ -13,6 +13,7 @@ import torch
 from torch import nn
 from datasets import load_dataset
 from transformers import AutoTokenizer
+from torch.utils.tensorboard import SummaryWriter
 import evaluate
 from tqdm.auto import tqdm
 from torch.utils.data import DataLoader
@@ -36,12 +37,15 @@ def parse_args():
     parser.add_argument("--precision", type=str, default="fp32", choices=["fp32", "amp"])    
     parser.add_argument("--data-dir", type=str, default='./data', help="data directory")
     parser.add_argument("--ckpt-path", type=str, default='./checkpoint.pt', help="checkpoint path")
+    parser.add_argument("--log-dir", type=str, default="./runs/test", help="TensorBoard log folder")
+    parser.add_argument("--log-every", type=int, default=20, help="log train loss every N steps")
     return parser.parse_args()
 args = parse_args()
 
 random.seed(args.seed)
 np.random.seed(args.seed)
 torch.manual_seed(args.seed)
+
 use_amp = args.precision == "amp"
 scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
 
@@ -168,8 +172,6 @@ max_answer_length= 30
 
 metric = evaluate.load("squad")
 
-
-
 def compute_metrics(start_logits, end_logits, features, examples):
     example_to_features = collections.defaultdict(list)
     for idx, feature in enumerate(features):
@@ -275,19 +277,24 @@ train_loss_record = []
 val_loss_record = []
 
 if os.path.exists(args.ckpt_path):
-  ckte = torch.load(args.ckpt_path)
-  model.load_state_dict(ckte["model"])
-  optimizer.load_state_dict(ckte["optimizer"])
-  scaler.load_state_dict(ckte["scaler"])
-  epoch_start = ckte["epoch"] + 1  
-  print("resuming from epooch ",epoch_start)
+    ckte = torch.load(args.ckpt_path, map_location="cpu")
+    model.load_state_dict(ckte["model"])
+    optimizer.load_state_dict(ckte["optimizer"])
+    scaler.load_state_dict(ckte["scaler"])
+    epoch_start = ckte["epoch"] + 1
+    global_step = ckte["global_step"]
+    print("resuming from epoch", epoch_start)
 else:
-  epoch_start = 0
-  print("no checkpoint, starting fresh")
+    epoch_start = 0
+    global_step = 0
+    print("no checkpoint, starting fresh")
 
 total_train_time = 0.0
 total_eval_time = 0.0
 peak_mem = 0 
+writer = SummaryWriter(log_dir=args.log_dir, purge_step=global_step)
+
+os.makedirs(os.path.dirname(args.ckpt_path) or ".", exist_ok=True)
 
 for epoch in tqdm(range(epoch_start, args.epochs)):
   train_loss_batch = 0
@@ -298,6 +305,11 @@ for epoch in tqdm(range(epoch_start, args.epochs)):
     batch = {k: v.to(device) for k, v in batch.items()}
     size = batch["input_ids"].shape[0]
     loss = train_step(model, optimizer, batch)
+
+    global_step += 1
+    if global_step % args.log_every == 0:
+        writer.add_scalar("train/loss_step", loss, global_step)
+
     train_loss_batch += loss *size
     n+= size
   epoch_train_end = time.time()
@@ -317,9 +329,29 @@ for epoch in tqdm(range(epoch_start, args.epochs)):
   print(f"Loss: {train_loss_record[-1]:.4f}") 
   print(f"Epoch {epoch} training time: {epoch_train_end- epoch_train_start:.2f} seconds, eval time: {epoch_eval_end- epoch_eval_start:.2f}")
   print(f"EM: {metrics['exact_match']:.4f}, F1: {metrics['f1']:.4f}")  
-
+  
+  writer.add_scalar("train/loss", train_loss_record[-1], epoch)
+  writer.add_scalar("train/epoch_time_s", epoch_train_end - epoch_train_start, epoch)
+  writer.add_scalar("eval/time_s", epoch_eval_end - epoch_eval_start, epoch)
+  writer.add_scalar("eval/exact_match", metrics["exact_match"], epoch)
+  writer.add_scalar("eval/f1", metrics["f1"], epoch)
+  
+  
   if epoch%2 == 0 or epoch  == args.epochs - 1 :
-   torch.save({"model": model.state_dict(), "epoch": epoch, "optimizer": optimizer.state_dict(), "scaler": scaler.state_dict()}, args.ckpt_path)
+   torch.save({"model": model.state_dict(), "epoch": epoch,
+               "optimizer": optimizer.state_dict(), "scaler": scaler.state_dict(),
+               "global_step": global_step}, args.ckpt_path)
+
 print(f"Total training time: {(total_train_time):.2f} seconds")
 print(f"Total eval time: {(total_eval_time):.2f} seconds")
-print(f"peak GPU memory: {peak_mem / 1024**3} GB")
+print(f"peak GPU memory: {peak_mem / 1024**3:.2f} GB")
+
+writer.add_hparams(
+    vars(args),
+    {"hp/total_train_time_s": total_train_time,
+     "hp/total_eval_time_s": total_eval_time,
+     "hp/peak_mem_gb": peak_mem / 1024**3,
+     "hp/f1": metrics["f1"],
+     "hp/exact_match": metrics["exact_match"]},
+)
+writer.close()
