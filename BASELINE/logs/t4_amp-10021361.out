@@ -1,0 +1,21 @@
+slurmstepd: info: Setting TMPDIR to /scratch/10021361. Previous errors about TMPDIR can be discarded
+train :  87599
+validation :  10570
+{'lr': 2e-05, 'epochs': 2, 'seed': 42, 'batch_size': 8, 'data_fraction': 1.0, 'precision': 'amp', 'data_dir': './data', 'ckpt_path': '/mnt/netapp2/Store_uni//home/ulc/cursos/curso363/checkpoints/t4_amp/checkpoint.pt', 'log_dir': 'runs/t4_amp', 'log_every': 20}
+2.11.0+cu128
+Tesla T4
+_CudaDeviceProperties(name='Tesla T4', major=7, minor=5, total_memory=14913MB, multi_processor_count=40, uuid=c77b98f9-6f52-211b-5339-abf9a9ac8d0f, pci_bus_id=152, pci_device_id=0, pci_domain_id=0, L2_cache_size=4MB)
+train features: 88492
+no checkpoint, starting fresh
+===== Epoch 0/1 =====
+Loss: 1.2665
+Epoch 0 training time: 1904.54 seconds, eval time: 63.29
+EM: 79.0634, F1: 86.8095
+===== Epoch 1/1 =====
+Loss: 0.7777
+Epoch 1 training time: 1902.97 seconds, eval time: 63.30
+EM: 80.1987, F1: 87.6277
+
+Total training time: 3807.52 seconds
+Total eval time: 126.59 seconds
+peak GPU memory: 2.63 GB
