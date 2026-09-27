@@ -1,0 +1,31 @@
+slurmstepd: info: Setting TMPDIR to /scratch/10023214. Previous errors about TMPDIR can be discarded
+train :  875
+validation :  105
+{'lr': 2e-05, 'epochs': 2, 'seed': 42, 'batch_size': 8, 'data_fraction': 0.01, 'precision': 'fp32', 'data_dir': './data', 'ckpt_path': '/mnt/netapp2/Store_uni//home/ulc/cursos/curso363/checkpoints/prof_fp32/checkpoint.pt', 'log_dir': 'runs/prof_fp32', 'log_every': 20, 'num_workers': 0, 'compile': False, 'profile': True, 'warmup_steps': 50}
+2.11.0+cu128
+NVIDIA A100-PCIE-40GB
+_CudaDeviceProperties(name='NVIDIA A100-PCIE-40GB', major=8, minor=0, total_memory=40442MB, multi_processor_count=108, uuid=80de43a7-0811-26ad-ca13-1341fb871f1b, pci_bus_id=152, pci_device_id=0, pci_domain_id=0, L2_cache_size=40MB)
+train features: 907
+no checkpoint, starting fresh
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+    autograd::engine::evaluate_function: AddmmBackward0         0.59%       4.874ms         4.92%      40.423ms     110.747us       0.000us         0.00%     325.835ms     892.698us           365  
+                                         AddmmBackward0         0.39%       3.176ms         3.11%      25.561ms      70.030us       0.000us         0.00%     318.017ms     871.280us           365  
+                                               aten::mm         1.47%      12.045ms         2.09%      17.158ms      23.504us     318.017ms        44.80%     318.017ms     435.640us           730  
+                                          ProfilerStep*        17.94%     147.466ms        78.85%     648.067ms     129.613ms       0.000us         0.00%     232.245ms      46.449ms             5  
+                                          ProfilerStep*         0.00%       0.000us         0.00%       0.000us       0.000us     212.156ms        29.88%     212.156ms      42.431ms             5  
+                                           aten::linear         0.32%       2.659ms         2.52%      20.704ms      56.724us       0.000us         0.00%     169.959ms     465.641us           365  
+                                            aten::addmm         1.27%      10.398ms         1.64%      13.516ms      37.031us     169.959ms        23.94%     169.959ms     465.641us           365  
+                        ampere_sgemm_64x32_sliced1x4_nt         0.00%       0.000us         0.00%       0.000us       0.000us     134.911ms        19.00%     134.911ms     374.754us           360  
+                                 ampere_sgemm_32x128_tn         0.00%       0.000us         0.00%       0.000us       0.000us     126.412ms        17.81%     126.412ms     400.037us           316  
+                                 ampere_sgemm_128x64_nn         0.00%       0.000us         0.00%       0.000us       0.000us     120.195ms        16.93%     120.195ms     834.687us           144  
+                        ampere_sgemm_64x32_sliced1x4_nn         0.00%       0.000us         0.00%       0.000us       0.000us      67.563ms         9.52%      67.563ms     234.592us           288  
+                                ampere_sgemm_128x128_nt         0.00%       0.000us         0.00%       0.000us       0.000us      58.848ms         8.29%      58.848ms     817.330us            72  
+                                 ampere_sgemm_128x64_tn         0.00%       0.000us         0.00%       0.000us       0.000us      52.869ms         7.45%      52.869ms     839.196us            63  
+fmha_cutlassB_f32_aligned_64x64_k64_dropout_sm80(PyT...         0.00%       0.000us         0.00%       0.000us       0.000us      44.509ms         6.27%      44.509ms     618.179us            72  
+autograd::engine::evaluate_function: ScaledDotProduc...         0.11%     930.272us         1.35%      11.078ms     184.641us       0.000us         0.00%      39.544ms     659.060us            60  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 821.873ms
+Self CUDA time total: 709.910ms
+

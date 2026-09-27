@@ -1,0 +1,40 @@
+cesga/2020 unloaded
+        Preparing the environment for use of the CESGA 2022 software stack.
+        Please rebuild modules cache: module --ignore-cache avail
+     
+cesga/2022 loaded
+python/3.10.8 loaded
+
+The following have been reloaded with a version change:
+  1) cesga/2020 => cesga/2022
+
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 6601.30it/s]
+[transformers] [1mBertForQuestionAnswering LOAD REPORT[0m from: google-bert/bert-base-uncased
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.seq_relationship.weight                | UNEXPECTED | 
+bert.pooler.dense.weight                   | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+cls.predictions.bias                       | UNEXPECTED | 
+cls.seq_relationship.bias                  | UNEXPECTED | 
+bert.pooler.dense.bias                     | UNEXPECTED | 
+qa_outputs.bias                            | MISSING    | 
+qa_outputs.weight                          | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  0%|          | 0/1 [00:00<?, ?it/s]
+  0%|          | 0/2114 [00:00<?, ?it/s][A
+ 13%|█▎        | 270/2114 [00:00<00:00, 2698.04it/s][A
+ 27%|██▋       | 561/2114 [00:00<00:00, 2821.60it/s][A
+ 40%|████      | 855/2114 [00:00<00:00, 2873.13it/s][A
+ 54%|█████▍    | 1143/2114 [00:00<00:00, 2847.56it/s][A
+ 68%|██████▊   | 1429/2114 [00:00<00:00, 2849.96it/s][A
+ 81%|████████  | 1716/2114 [00:00<00:00, 2854.61it/s][A
+ 95%|█████████▍| 2002/2114 [00:00<00:00, 2842.15it/s][A100%|██████████| 2114/2114 [00:00<00:00, 2840.49it/s]
+100%|██████████| 1/1 [02:23<00:00, 143.59s/it]100%|██████████| 1/1 [02:23<00:00, 143.59s/it]

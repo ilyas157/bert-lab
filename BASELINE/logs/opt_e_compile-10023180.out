@@ -1,0 +1,18 @@
+slurmstepd: info: Setting TMPDIR to /scratch/10023180. Previous errors about TMPDIR can be discarded
+train :  17519
+validation :  2114
+{'lr': 3e-05, 'epochs': 1, 'seed': 42, 'batch_size': 32, 'data_fraction': 0.2, 'precision': 'amp', 'data_dir': './data', 'ckpt_path': '/mnt/netapp2/Store_uni//home/ulc/cursos/curso363/checkpoints/opt_e_compile/checkpoint.pt', 'log_dir': 'runs/opt_e_compile', 'log_every': 20, 'num_workers': 4, 'compile': True, 'profile': False, 'warmup_steps': 50}
+2.11.0+cu128
+NVIDIA A100-PCIE-40GB
+_CudaDeviceProperties(name='NVIDIA A100-PCIE-40GB', major=8, minor=0, total_memory=40442MB, multi_processor_count=108, uuid=59379822-ba58-6ddd-0600-dac0ae599321, pci_bus_id=152, pci_device_id=0, pci_domain_id=0, L2_cache_size=40MB)
+train features: 17669
+no checkpoint, starting fresh
+Throughput after warm-up: 198.9 features/s
+===== Epoch 0/0 =====
+Loss: 1.8264
+Epoch 0 training time: 121.47 seconds, eval time: 19.34
+EM: 68.9215, F1: 78.0583
+
+Total training time: 121.47 seconds
+Total eval time: 19.34 seconds
+peak GPU memory: 5.57 GB

@@ -1,0 +1,31 @@
+slurmstepd: info: Setting TMPDIR to /scratch/10022942. Previous errors about TMPDIR can be discarded
+train :  875
+validation :  105
+{'lr': 2e-05, 'epochs': 2, 'seed': 42, 'batch_size': 8, 'data_fraction': 0.01, 'precision': 'amp', 'data_dir': './data', 'ckpt_path': '/mnt/netapp2/Store_uni//home/ulc/cursos/curso363/checkpoints/opt_prof/checkpoint.pt', 'log_dir': 'runs/opt_prof', 'log_every': 20, 'num_workers': 0, 'compile': False, 'profile': True, 'warmup_steps': 50}
+2.11.0+cu128
+NVIDIA A100-PCIE-40GB
+_CudaDeviceProperties(name='NVIDIA A100-PCIE-40GB', major=8, minor=0, total_memory=40442MB, multi_processor_count=108, uuid=8bdc6ee1-27a5-4df9-fb3f-478402873d9a, pci_bus_id=152, pci_device_id=0, pci_domain_id=0, L2_cache_size=40MB)
+train features: 907
+no checkpoint, starting fresh
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                          ProfilerStep*         0.00%       0.000us         0.00%       0.000us       0.000us     338.163ms       216.77%     338.163ms      67.633ms             5  
+                                          ProfilerStep*        42.15%     211.458ms        73.76%     370.017ms      74.003ms       0.000us         0.00%      75.066ms      15.013ms             5  
+    autograd::engine::evaluate_function: AddmmBackward0         1.03%       5.192ms         9.80%      49.162ms     134.690us       0.000us         0.00%      35.495ms      97.248us           365  
+                                           aten::linear         1.00%       5.013ms        14.24%      71.428ms      97.846us       0.000us         0.00%      34.691ms      47.521us           730  
+                              Optimizer.step#AdamW.step         0.00%       0.000us         0.00%       0.000us       0.000us      34.653ms        22.21%      34.653ms       6.931ms             5  
+                              Optimizer.step#AdamW.step         2.51%      12.604ms         5.20%      26.089ms       5.218ms       0.000us         0.00%      34.393ms       6.879ms             5  
+                                         AddmmBackward0         0.68%       3.435ms         6.65%      33.341ms      91.346us       0.000us         0.00%      29.807ms      81.662us           365  
+                                               aten::mm         3.38%      16.949ms         4.84%      24.298ms      33.285us      29.807ms        19.11%      29.807ms      40.831us           730  
+autograd::engine::evaluate_function: ScaledDotProduc...         0.18%     901.686us         1.49%       7.476ms     124.592us       0.000us         0.00%      17.786ms     296.438us            60  
+            ScaledDotProductEfficientAttentionBackward0         0.08%     396.336us         1.31%       6.574ms     109.564us       0.000us         0.00%      17.786ms     296.438us            60  
+aten::_scaled_dot_product_efficient_attention_backwa...         0.22%       1.088ms         1.23%       6.177ms     102.958us       0.000us         0.00%      17.786ms     296.438us            60  
+                    aten::_efficient_attention_backward         0.26%       1.316ms         0.79%       3.972ms      66.204us      17.439ms        11.18%      17.786ms     296.438us            60  
+fmha_cutlassB_f16_aligned_64x64_k64_dropout_sm80(PyT...         0.00%       0.000us         0.00%       0.000us       0.000us      17.439ms        11.18%      17.439ms     290.654us            60  
+                                            aten::addmm         2.62%      13.123ms         3.30%      16.543ms      45.323us      14.759ms         9.46%      14.759ms      40.436us           365  
+                                            aten::copy_         2.48%      12.417ms         5.90%      29.602ms      13.394us      14.101ms         9.04%      14.101ms       6.381us          2210  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 501.674ms
+Self CUDA time total: 155.999ms
+

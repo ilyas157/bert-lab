@@ -1,0 +1,31 @@
+slurmstepd: info: Setting TMPDIR to /scratch/10023213. Previous errors about TMPDIR can be discarded
+train :  875
+validation :  105
+{'lr': 3e-05, 'epochs': 2, 'seed': 42, 'batch_size': 32, 'data_fraction': 0.01, 'precision': 'amp', 'data_dir': './data', 'ckpt_path': '/mnt/netapp2/Store_uni//home/ulc/cursos/curso363/checkpoints/prof_opt/checkpoint.pt', 'log_dir': 'runs/prof_opt', 'log_every': 20, 'num_workers': 4, 'compile': True, 'profile': True, 'warmup_steps': 50}
+2.11.0+cu128
+NVIDIA A100-PCIE-40GB
+_CudaDeviceProperties(name='NVIDIA A100-PCIE-40GB', major=8, minor=0, total_memory=40442MB, multi_processor_count=108, uuid=80de43a7-0811-26ad-ca13-1341fb871f1b, pci_bus_id=152, pci_device_id=0, pci_domain_id=0, L2_cache_size=40MB)
+train features: 907
+no checkpoint, starting fresh
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                          ProfilerStep*         0.00%       0.000us         0.00%       0.000us       0.000us     415.295ms       106.44%     415.295ms      83.059ms             5  
+## Call CompiledFxGraph fh7phutiiujrmquqga3tv3atdgsa...         0.00%       0.000us         0.00%       0.000us       0.000us     239.466ms        61.38%     239.466ms      47.893ms             5  
+autograd::engine::evaluate_function: CompiledFunctio...         0.11%     582.300us        19.59%     104.066ms      20.813ms       0.000us         0.00%     235.473ms      47.095ms             5  
+                               CompiledFunctionBackward         0.21%       1.132ms        19.48%     103.484ms      20.697ms       0.000us         0.00%     235.473ms      47.095ms             5  
+## Call CompiledFxGraph fh7phutiiujrmquqga3tv3atdgsa...         8.82%      46.834ms        19.22%     102.113ms      20.423ms       0.000us         0.00%     235.454ms      47.091ms             5  
+                                          ProfilerStep*        23.95%     127.236ms        78.43%     416.690ms      83.338ms       0.000us         0.00%     150.102ms      30.020ms             5  
+## Call CompiledFxGraph fvuqjrfepfhjig4k4d2k6i3ow4e2...         0.00%       0.000us         0.00%       0.000us       0.000us     114.971ms        29.47%     114.971ms      22.994ms             5  
+                             Torch-Compiled Region: 0/0         0.26%       1.367ms        11.74%      62.395ms      12.479ms       0.000us         0.00%     111.870ms      22.374ms             5  
+                                       CompiledFunction         0.27%       1.455ms        11.44%      60.781ms      12.156ms       0.000us         0.00%     111.870ms      22.374ms             5  
+## Call CompiledFxGraph fvuqjrfepfhjig4k4d2k6i3ow4e2...         5.59%      29.689ms        11.17%      59.326ms      11.865ms       0.000us         0.00%     111.870ms      22.374ms             5  
+                                               aten::mm         2.34%      12.450ms         3.42%      18.158ms      24.874us     102.728ms        26.33%     102.728ms     140.723us           730  
+aten::_scaled_dot_product_efficient_attention_backwa...         0.19%     997.506us         1.23%       6.532ms     108.866us       0.000us         0.00%      73.992ms       1.233ms            60  
+                    aten::_efficient_attention_backward         0.24%       1.268ms         0.79%       4.221ms      70.356us      72.526ms        18.59%      73.992ms       1.233ms            60  
+fmha_cutlassB_f16_aligned_64x64_k64_dropout_sm80(PyT...         0.00%       0.000us         0.00%       0.000us       0.000us      72.526ms        18.59%      72.526ms       1.209ms            60  
+                                            aten::addmm         1.45%       7.726ms         1.97%      10.454ms      28.642us      54.357ms        13.93%      54.357ms     148.923us           365  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 531.273ms
+Self CUDA time total: 390.157ms
+
