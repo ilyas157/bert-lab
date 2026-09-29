@@ -1,0 +1,28 @@
+slurmstepd: info: Setting TMPDIR to /scratch/10024598. Previous errors about TMPDIR can be discarded
+train :  17519
+validation :  2114
+{'lr': 5e-05, 'epochs': 3, 'seed': 42, 'batch_size': 64, 'data_fraction': 0.2, 'precision': 'amp', 'data_dir': './data', 'ckpt_path': '/mnt/netapp2/Store_uni//home/ulc/cursos/curso363/checkpoints/opt_f_batch64/checkpoint.pt', 'log_dir': 'runs/opt_f_batch64', 'log_every': 20, 'num_workers': 0, 'compile': True, 'profile': False, 'warmup_steps': 50}
+2.11.0+cu128
+NVIDIA A100-PCIE-40GB
+_CudaDeviceProperties(name='NVIDIA A100-PCIE-40GB', major=8, minor=0, total_memory=40442MB, multi_processor_count=108, uuid=bd13fa64-f376-8422-cd96-58f218a1c0a4, pci_bus_id=23, pci_device_id=0, pci_domain_id=0, L2_cache_size=40MB)
+train features: 17669
+no checkpoint, starting fresh
+Throughput after warm-up: 440.3 features/s
+===== Epoch 0/2 =====
+Loss: 1.8998
+Epoch 0 training time: 70.63 seconds, eval time: 29.24
+EM: 69.9622, F1: 78.8550
+Throughput after warm-up: 437.1 features/s
+===== Epoch 1/2 =====
+Loss: 0.8793
+Epoch 1 training time: 40.40 seconds, eval time: 2.66
+EM: 71.5232, F1: 79.7654
+Throughput after warm-up: 433.9 features/s
+===== Epoch 2/2 =====
+Loss: 0.5324
+Epoch 2 training time: 40.70 seconds, eval time: 2.66
+EM: 71.0974, F1: 79.6236
+
+Total training time: 151.73 seconds
+Total eval time: 34.55 seconds
+peak GPU memory: 9.71 GB

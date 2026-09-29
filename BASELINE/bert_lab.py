@@ -241,6 +241,7 @@ train_loader = DataLoader(
     train_dataset,
     shuffle=True,             # shuffle for stochastic training
     batch_size=args.batch_size,
+    drop_last=True,
     pin_memory=True,          # speeds up GPU transfers
     num_workers=args.num_workers,
     persistent_workers=args.num_workers > 0,
