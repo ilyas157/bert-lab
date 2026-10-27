@@ -1,0 +1,133 @@
+cesga/2020 unloaded
+        Preparing the environment for use of the CESGA 2022 software stack.
+        Please rebuild modules cache: module --ignore-cache avail
+     
+cesga/2022 loaded
+python/3.10.8 loaded
+
+The following have been reloaded with a version change:
+  1) cesga/2020 => cesga/2022
+
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+/mnt/netapp2/Store_uni/home/ulc/cursos/curso363/venvs/bertlab/lib/python3.10/site-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+  return func(*args, **kwargs)
+[rank0]:[W1027 21:33:28.024154267 ProcessGroupNCCL.cpp:5188] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights:  66%|██████▋   | 131/197 [00:00<00:00, 1267.29it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 1284.50it/s]
+[transformers] [1mBertForQuestionAnswering LOAD REPORT[0m from: google-bert/bert-base-uncased
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.seq_relationship.bias                  | UNEXPECTED | 
+bert.pooler.dense.bias                     | UNEXPECTED | 
+cls.seq_relationship.weight                | UNEXPECTED | 
+cls.predictions.bias                       | UNEXPECTED | 
+bert.pooler.dense.weight                   | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+qa_outputs.bias                            | MISSING    | 
+qa_outputs.weight                          | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 6420.73it/s]
+[transformers] [1mBertForQuestionAnswering LOAD REPORT[0m from: google-bert/bert-base-uncased
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+cls.seq_relationship.bias                  | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.predictions.bias                       | UNEXPECTED | 
+bert.pooler.dense.weight                   | UNEXPECTED | 
+cls.seq_relationship.weight                | UNEXPECTED | 
+bert.pooler.dense.bias                     | UNEXPECTED | 
+qa_outputs.bias                            | MISSING    | 
+qa_outputs.weight                          | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  0%|          | 0/2 [00:00<?, ?it/s][rank1]:W1027 21:33:41.649000 4006528 torch/_logging/_internal.py:1279] [0/0] Profiler record function <class 'torch.autograd.profiler.record_function'> will be ignored
+[rank0]:W1027 21:33:41.649000 4006527 torch/_logging/_internal.py:1279] [0/0] Profiler record function <class 'torch.autograd.profiler.record_function'> will be ignored
+
+  0%|          | 0/10570 [00:00<?, ?it/s][A
+  2%|▏         | 263/10570 [00:00<00:03, 2617.81it/s][A
+  5%|▌         | 549/10570 [00:00<00:03, 2756.37it/s][A
+  8%|▊         | 846/10570 [00:00<00:03, 2849.30it/s][A
+ 11%|█         | 1131/10570 [00:00<00:03, 2689.81it/s][A
+ 13%|█▎        | 1424/10570 [00:00<00:03, 2770.16it/s][A
+ 16%|█▋        | 1718/10570 [00:00<00:03, 2823.42it/s][A
+ 19%|█▉        | 2002/10570 [00:00<00:03, 2743.73it/s][A
+ 22%|██▏       | 2284/10570 [00:00<00:02, 2766.87it/s][A
+ 24%|██▍       | 2576/10570 [00:00<00:02, 2811.20it/s][A
+ 27%|██▋       | 2866/10570 [00:01<00:02, 2835.89it/s][A
+ 30%|██▉       | 3151/10570 [00:01<00:02, 2760.08it/s][A
+ 33%|███▎      | 3445/10570 [00:01<00:02, 2812.57it/s][A
+ 35%|███▌      | 3743/10570 [00:01<00:02, 2861.67it/s][A
+ 38%|███▊      | 4030/10570 [00:01<00:02, 2704.37it/s][A
+ 41%|████      | 4303/10570 [00:01<00:02, 2613.91it/s][A
+ 43%|████▎     | 4589/10570 [00:01<00:02, 2683.51it/s][A
+ 46%|████▌     | 4866/10570 [00:01<00:02, 2708.17it/s][A
+ 49%|████▊     | 5139/10570 [00:01<00:02, 2672.05it/s][A
+ 51%|█████▏    | 5435/10570 [00:01<00:01, 2753.32it/s][A
+ 54%|█████▍    | 5716/10570 [00:02<00:01, 2768.26it/s][A
+ 57%|█████▋    | 6001/10570 [00:02<00:01, 2755.93it/s][A
+ 60%|█████▉    | 6297/10570 [00:02<00:01, 2813.36it/s][A
+ 62%|██████▏   | 6590/10570 [00:02<00:01, 2845.06it/s][A
+ 65%|██████▌   | 6889/10570 [00:02<00:01, 2886.48it/s][A
+ 68%|██████▊   | 7178/10570 [00:02<00:01, 2770.17it/s][A
+ 71%|███████   | 7457/10570 [00:02<00:01, 2772.30it/s][A
+ 73%|███████▎  | 7747/10570 [00:02<00:01, 2809.51it/s][A
+ 76%|███████▌  | 8036/10570 [00:02<00:00, 2833.10it/s][A
+ 79%|███████▊  | 8323/10570 [00:02<00:00, 2841.91it/s][A
+ 82%|████████▏ | 8618/10570 [00:03<00:00, 2872.24it/s][A
+ 84%|████████▍ | 8914/10570 [00:03<00:00, 2896.29it/s][A
+ 87%|████████▋ | 9204/10570 [00:03<00:00, 2725.11it/s][A
+ 90%|████████▉ | 9496/10570 [00:03<00:00, 2779.39it/s][A
+ 93%|█████████▎| 9792/10570 [00:03<00:00, 2830.21it/s][A
+ 95%|█████████▌| 10085/10570 [00:03<00:00, 2857.84it/s][A
+ 98%|█████████▊| 10380/10570 [00:03<00:00, 2883.84it/s][A100%|██████████| 10570/10570 [00:03<00:00, 2795.15it/s]
+ 50%|█████     | 1/2 [03:35<03:35, 215.81s/it]
+  0%|          | 0/10570 [00:00<?, ?it/s][A
+  3%|▎         | 270/10570 [00:00<00:03, 2692.49it/s][A
+  5%|▌         | 560/10570 [00:00<00:03, 2810.53it/s][A
+  8%|▊         | 852/10570 [00:00<00:03, 2859.67it/s][A
+ 11%|█         | 1138/10570 [00:00<00:03, 2831.84it/s][A
+ 13%|█▎        | 1422/10570 [00:00<00:03, 2833.79it/s][A
+ 16%|█▌        | 1711/10570 [00:00<00:03, 2849.71it/s][A
+ 19%|█▉        | 1996/10570 [00:00<00:03, 2844.09it/s][A
+ 22%|██▏       | 2281/10570 [00:00<00:02, 2817.75it/s][A
+ 24%|██▍       | 2563/10570 [00:00<00:02, 2818.42it/s][A
+ 27%|██▋       | 2845/10570 [00:01<00:02, 2814.31it/s][A
+ 30%|██▉       | 3127/10570 [00:01<00:02, 2814.78it/s][A
+ 32%|███▏      | 3412/10570 [00:01<00:02, 2823.10it/s][A
+ 35%|███▌      | 3700/10570 [00:01<00:02, 2837.93it/s][A
+ 38%|███▊      | 3989/10570 [00:01<00:02, 2853.27it/s][A
+ 40%|████      | 4275/10570 [00:01<00:02, 2732.03it/s][A
+ 43%|████▎     | 4550/10570 [00:01<00:02, 2691.61it/s][A
+ 46%|████▌     | 4820/10570 [00:01<00:02, 2689.22it/s][A
+ 48%|████▊     | 5104/10570 [00:01<00:01, 2733.32it/s][A
+ 51%|█████     | 5389/10570 [00:01<00:01, 2765.52it/s][A
+ 54%|█████▎    | 5666/10570 [00:02<00:01, 2746.81it/s][A
+ 56%|█████▋    | 5953/10570 [00:02<00:01, 2781.58it/s][A
+ 59%|█████▉    | 6237/10570 [00:02<00:01, 2796.55it/s][A
+ 62%|██████▏   | 6520/10570 [00:02<00:01, 2806.36it/s][A
+ 64%|██████▍   | 6808/10570 [00:02<00:01, 2827.55it/s][A
+ 67%|██████▋   | 7094/10570 [00:02<00:01, 2835.33it/s][A
+ 70%|██████▉   | 7378/10570 [00:02<00:01, 2817.79it/s][A
+ 72%|███████▏  | 7660/10570 [00:02<00:01, 2813.71it/s][A
+ 75%|███████▌  | 7949/10570 [00:02<00:00, 2836.01it/s][A
+ 78%|███████▊  | 8235/10570 [00:02<00:00, 2840.56it/s][A
+ 81%|████████  | 8520/10570 [00:03<00:00, 2817.66it/s][A
+ 83%|████████▎ | 8802/10570 [00:03<00:00, 2816.98it/s][A
+ 86%|████████▌ | 9084/10570 [00:03<00:00, 2817.39it/s][A
+ 89%|████████▊ | 9366/10570 [00:03<00:00, 2808.90it/s][A
+ 91%|█████████▏| 9650/10570 [00:03<00:00, 2816.03it/s][A
+ 94%|█████████▍| 9932/10570 [00:03<00:00, 2815.07it/s][A
+ 97%|█████████▋| 10216/10570 [00:03<00:00, 2820.48it/s][A
+ 99%|█████████▉| 10503/10570 [00:03<00:00, 2834.10it/s][A100%|██████████| 10570/10570 [00:03<00:00, 2807.13it/s]
+100%|██████████| 2/2 [06:12<00:00, 181.11s/it]100%|██████████| 2/2 [06:12<00:00, 186.32s/it]

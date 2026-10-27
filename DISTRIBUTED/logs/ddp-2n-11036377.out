@@ -1,0 +1,27 @@
+slurmstepd: info: Setting TMPDIR to /scratch/11036377. Previous errors about TMPDIR can be discarded
+NVIDIA A100-PCIE-40GB
+_CudaDeviceProperties(name='NVIDIA A100-PCIE-40GB', major=8, minor=0, total_memory=40440MB, multi_processor_count=108, uuid=caad0dcd-f8c5-6df9-44a5-aaacbee89384, pci_bus_id=23, pci_device_id=0, pci_domain_id=0, L2_cache_size=40MB)
+Hello from rank 0 of 4 on c208-5 where there are 2 allocated GPUs per node.
+train :  87599
+validation :  10570
+{'lr': 3e-05, 'epochs': 2, 'seed': 42, 'batch_size': 32, 'data_fraction': 1.0, 'precision': 'amp', 'data_dir': './data', 'ckpt_path': '/mnt/netapp2/Store_uni//home/ulc/cursos/curso363/checkpoints/ddp-2n/checkpoint.pt', 'log_dir': 'runs/ddp-2n', 'log_every': 20, 'num_workers': 0, 'compile': True, 'profile': False, 'warmup_steps': 50}
+2.11.0+cu128
+train features: 88492
+Hello from rank 1 of 4 on c208-5 where there are 2 allocated GPUs per node.
+Hello from rank 3 of 4 on c209-2 where there are 2 allocated GPUs per node.
+Hello from rank 2 of 4 on c209-2 where there are 2 allocated GPUs per node.
+no checkpoint, starting fresh
+Throughput after warm-up: 1157.8 features/s
+===== Epoch 0/1 =====
+Loss: 1.5553
+Epoch 0 training time: 118.07 seconds, eval time: 15.63
+EM: 76.6509, F1: 85.1021
+Throughput after warm-up: 1154.3 features/s
+===== Epoch 1/1 =====
+Loss: 0.9172
+Epoch 1 training time: 80.91 seconds, eval time: 15.60
+EM: 79.4418, F1: 86.9997
+
+Total training time: 198.98 seconds
+Total eval time: 31.23 seconds
+peak GPU memory: 6.09 GB

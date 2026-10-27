@@ -1,0 +1,176 @@
+cesga/2020 unloaded
+        Preparing the environment for use of the CESGA 2022 software stack.
+        Please rebuild modules cache: module --ignore-cache avail
+     
+cesga/2022 loaded
+python/3.10.8 loaded
+
+The following have been reloaded with a version change:
+  1) cesga/2020 => cesga/2022
+
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+/mnt/netapp2/Store_uni/home/ulc/cursos/curso363/venvs/bertlab/lib/python3.10/site-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+  return func(*args, **kwargs)
+[rank0]:[W1027 21:41:19.086655573 ProcessGroupNCCL.cpp:5188] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+[rank2]:[W1027 21:41:35.028117813 ProcessGroupNCCL.cpp:5188] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 6604.62it/s]
+[transformers] [1mBertForQuestionAnswering LOAD REPORT[0m from: google-bert/bert-base-uncased
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+bert.pooler.dense.bias                     | UNEXPECTED | 
+bert.pooler.dense.weight                   | UNEXPECTED | 
+cls.seq_relationship.bias                  | UNEXPECTED | 
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.seq_relationship.weight                | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+qa_outputs.weight                          | MISSING    | 
+qa_outputs.bias                            | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 6342.66it/s]
+[transformers] [1mBertForQuestionAnswering LOAD REPORT[0m from: google-bert/bert-base-uncased
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.seq_relationship.weight                | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+bert.pooler.dense.bias                     | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+bert.pooler.dense.weight                   | UNEXPECTED | 
+cls.predictions.bias                       | UNEXPECTED | 
+cls.seq_relationship.bias                  | UNEXPECTED | 
+qa_outputs.weight                          | MISSING    | 
+qa_outputs.bias                            | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights:  70%|██████▉   | 137/197 [00:00<00:00, 1369.47it/s]Loading weights:  77%|███████▋  | 151/197 [00:00<00:00, 1470.89it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 1534.27it/s]
+Loading weights: 100%|██████████| 197/197 [00:00<00:00, 1607.45it/s]
+[transformers] [1mBertForQuestionAnswering LOAD REPORT[0m from: google-bert/bert-base-uncased
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.seq_relationship.weight                | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.seq_relationship.bias                  | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+bert.pooler.dense.bias                     | UNEXPECTED | 
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+bert.pooler.dense.weight                   | UNEXPECTED | 
+qa_outputs.bias                            | MISSING    | 
+qa_outputs.weight                          | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[transformers] [1mBertForQuestionAnswering LOAD REPORT[0m from: google-bert/bert-base-uncased
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.seq_relationship.bias                  | UNEXPECTED | 
+bert.pooler.dense.weight                   | UNEXPECTED | 
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.seq_relationship.weight                | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+bert.pooler.dense.bias                     | UNEXPECTED | 
+qa_outputs.bias                            | MISSING    | 
+qa_outputs.weight                          | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  0%|          | 0/2 [00:00<?, ?it/s][rank1]:W1027 21:41:49.497000 4007943 torch/_logging/_internal.py:1279] [0/0] Profiler record function <class 'torch.autograd.profiler.record_function'> will be ignored
+[rank0]:W1027 21:41:49.497000 4007942 torch/_logging/_internal.py:1279] [0/0] Profiler record function <class 'torch.autograd.profiler.record_function'> will be ignored
+[rank3]:W1027 21:41:51.695000 3426924 torch/_logging/_internal.py:1279] [0/0] Profiler record function <class 'torch.autograd.profiler.record_function'> will be ignored
+[rank2]:W1027 21:41:51.695000 3426923 torch/_logging/_internal.py:1279] [0/0] Profiler record function <class 'torch.autograd.profiler.record_function'> will be ignored
+
+  0%|          | 0/10570 [00:00<?, ?it/s][A
+  3%|▎         | 271/10570 [00:00<00:03, 2702.59it/s][A
+  5%|▌         | 563/10570 [00:00<00:03, 2826.05it/s][A
+  8%|▊         | 858/10570 [00:00<00:03, 2879.78it/s][A
+ 11%|█         | 1146/10570 [00:00<00:03, 2868.60it/s][A
+ 14%|█▎        | 1436/10570 [00:00<00:03, 2878.40it/s][A
+ 16%|█▋        | 1727/10570 [00:00<00:03, 2888.77it/s][A
+ 19%|█▉        | 2016/10570 [00:00<00:02, 2888.26it/s][A
+ 22%|██▏       | 2305/10570 [00:00<00:02, 2863.69it/s][A
+ 25%|██▍       | 2596/10570 [00:00<00:02, 2875.39it/s][A
+ 27%|██▋       | 2884/10570 [00:01<00:02, 2876.10it/s][A
+ 30%|███       | 3173/10570 [00:01<00:02, 2878.21it/s][A
+ 33%|███▎      | 3465/10570 [00:01<00:02, 2888.38it/s][A
+ 36%|███▌      | 3762/10570 [00:01<00:02, 2910.78it/s][A
+ 38%|███▊      | 4056/10570 [00:01<00:02, 2919.46it/s][A
+ 41%|████      | 4348/10570 [00:01<00:02, 2747.37it/s][A
+ 44%|████▍     | 4630/10570 [00:01<00:02, 2767.21it/s][A
+ 46%|████▋     | 4911/10570 [00:01<00:02, 2776.97it/s][A
+ 49%|████▉     | 5203/10570 [00:01<00:01, 2817.04it/s][A
+ 52%|█████▏    | 5487/10570 [00:01<00:01, 2822.78it/s][A
+ 55%|█████▍    | 5775/10570 [00:02<00:01, 2839.63it/s][A
+ 57%|█████▋    | 6065/10570 [00:02<00:01, 2857.07it/s][A
+ 60%|██████    | 6358/10570 [00:02<00:01, 2878.17it/s][A
+ 63%|██████▎   | 6647/10570 [00:02<00:01, 2876.71it/s][A
+ 66%|██████▌   | 6941/10570 [00:02<00:01, 2894.26it/s][A
+ 68%|██████▊   | 7231/10570 [00:02<00:01, 2887.75it/s][A
+ 71%|███████   | 7520/10570 [00:02<00:01, 2882.09it/s][A
+ 74%|███████▍  | 7809/10570 [00:02<00:00, 2877.85it/s][A
+ 77%|███████▋  | 8102/10570 [00:02<00:00, 2891.24it/s][A
+ 79%|███████▉  | 8392/10570 [00:02<00:00, 2871.01it/s][A
+ 82%|████████▏ | 8682/10570 [00:03<00:00, 2878.98it/s][A
+ 85%|████████▍ | 8973/10570 [00:03<00:00, 2887.33it/s][A
+ 88%|████████▊ | 9262/10570 [00:03<00:00, 2877.07it/s][A
+ 90%|█████████ | 9550/10570 [00:03<00:00, 2874.34it/s][A
+ 93%|█████████▎| 9841/10570 [00:03<00:00, 2882.27it/s][A
+ 96%|█████████▌| 10132/10570 [00:03<00:00, 2889.94it/s][A
+ 99%|█████████▊| 10422/10570 [00:03<00:00, 2889.32it/s][A100%|██████████| 10570/10570 [00:03<00:00, 2866.88it/s]
+ 50%|█████     | 1/2 [02:17<02:17, 137.94s/it]
+  0%|          | 0/10570 [00:00<?, ?it/s][A
+  3%|▎         | 268/10570 [00:00<00:03, 2673.92it/s][A
+  5%|▌         | 553/10570 [00:00<00:03, 2772.90it/s][A
+  8%|▊         | 843/10570 [00:00<00:03, 2829.43it/s][A
+ 11%|█         | 1126/10570 [00:00<00:03, 2810.33it/s][A
+ 13%|█▎        | 1410/10570 [00:00<00:03, 2818.51it/s][A
+ 16%|█▌        | 1695/10570 [00:00<00:03, 2826.40it/s][A
+ 19%|█▊        | 1978/10570 [00:00<00:03, 2822.69it/s][A
+ 21%|██▏       | 2261/10570 [00:00<00:02, 2796.71it/s][A
+ 24%|██▍       | 2542/10570 [00:00<00:02, 2799.91it/s][A
+ 27%|██▋       | 2823/10570 [00:01<00:02, 2797.36it/s][A
+ 29%|██▉       | 3105/10570 [00:01<00:02, 2802.90it/s][A
+ 32%|███▏      | 3390/10570 [00:01<00:02, 2816.49it/s][A
+ 35%|███▍      | 3676/10570 [00:01<00:02, 2828.13it/s][A
+ 38%|███▊      | 3964/10570 [00:01<00:02, 2841.30it/s][A
+ 40%|████      | 4249/10570 [00:01<00:02, 2764.76it/s][A
+ 43%|████▎     | 4526/10570 [00:01<00:02, 2672.39it/s][A
+ 45%|████▌     | 4795/10570 [00:01<00:02, 2673.35it/s][A
+ 48%|████▊     | 5079/10570 [00:01<00:02, 2720.37it/s][A
+ 51%|█████     | 5361/10570 [00:01<00:01, 2749.36it/s][A
+ 53%|█████▎    | 5637/10570 [00:02<00:01, 2742.41it/s][A
+ 56%|█████▌    | 5919/10570 [00:02<00:01, 2764.22it/s][A
+ 59%|█████▊    | 6204/10570 [00:02<00:01, 2787.50it/s][A
+ 61%|██████▏   | 6484/10570 [00:02<00:01, 2789.41it/s][A
+ 64%|██████▍   | 6768/10570 [00:02<00:01, 2803.28it/s][A
+ 67%|██████▋   | 7053/10570 [00:02<00:01, 2815.90it/s][A
+ 69%|██████▉   | 7335/10570 [00:02<00:01, 2808.48it/s][A
+ 72%|███████▏  | 7616/10570 [00:02<00:01, 2805.33it/s][A
+ 75%|███████▍  | 7897/10570 [00:02<00:00, 2805.11it/s][A
+ 77%|███████▋  | 8183/10570 [00:02<00:00, 2821.18it/s][A
+ 80%|████████  | 8466/10570 [00:03<00:00, 2797.48it/s][A
+ 83%|████████▎ | 8747/10570 [00:03<00:00, 2799.37it/s][A
+ 85%|████████▌ | 9028/10570 [00:03<00:00, 2800.90it/s][A
+ 88%|████████▊ | 9309/10570 [00:03<00:00, 2794.56it/s][A
+ 91%|█████████ | 9593/10570 [00:03<00:00, 2805.76it/s][A
+ 93%|█████████▎| 9874/10570 [00:03<00:00, 2806.71it/s][A
+ 96%|█████████▌| 10160/10570 [00:03<00:00, 2820.71it/s][A
+ 99%|█████████▉| 10443/10570 [00:03<00:00, 2819.56it/s][A100%|██████████| 10570/10570 [00:03<00:00, 2793.25it/s]
+100%|██████████| 2/2 [03:53<00:00, 113.00s/it]100%|██████████| 2/2 [03:53<00:00, 116.74s/it]
