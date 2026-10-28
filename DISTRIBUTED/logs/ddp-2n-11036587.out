@@ -1,0 +1,35 @@
+slurmstepd: info: Setting TMPDIR to /scratch/11036587. Previous errors about TMPDIR can be discarded
+NVIDIA A100-PCIE-40GB
+_CudaDeviceProperties(name='NVIDIA A100-PCIE-40GB', major=8, minor=0, total_memory=40440MB, multi_processor_count=108, uuid=e4113187-c7d3-e9cd-437f-614e5d4a3483, pci_bus_id=23, pci_device_id=0, pci_domain_id=0, L2_cache_size=40MB)
+Hello from rank 0 of 4 on c207-14 where there are 2 allocated GPUs per node.
+train :  87599
+validation :  10570
+{'lr': 3e-05, 'epochs': 2, 'seed': 42, 'batch_size': 32, 'data_fraction': 1.0, 'precision': 'amp', 'data_dir': './data', 'ckpt_path': '/mnt/netapp2/Store_uni//home/ulc/cursos/curso363/checkpoints/prof-2n/checkpoint.pt', 'log_dir': 'runs/prof-2n', 'log_every': 20, 'num_workers': 0, 'compile': True, 'profile': True, 'warmup_steps': 50}
+2.11.0+cu128
+train features: 88492
+Hello from rank 2 of 4 on c208-2 where there are 2 allocated GPUs per node.
+Hello from rank 1 of 4 on c207-14 where there are 2 allocated GPUs per node.
+Hello from rank 3 of 4 on c208-2 where there are 2 allocated GPUs per node.
+no checkpoint, starting fresh
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                          ProfilerStep*         0.00%       0.000us         0.00%       0.000us       0.000us     607.675ms        72.87%     607.675ms     121.535ms             5  
+autograd::engine::evaluate_function: torch::autograd...         1.09%      10.023ms         3.91%      36.085ms      36.266us       0.000us         0.00%     371.514ms     373.381us           995  
+                                     record_param_comms         0.54%       4.997ms         0.70%       6.464ms      80.794us     360.869ms        43.27%     360.869ms       4.511ms            80  
+                                       c10d::allreduce_         0.16%       1.444ms         0.80%       7.428ms     106.108us       0.000us         0.00%     360.821ms       5.155ms            70  
+ncclDevKernel_AllReduce_Sum_f32_RING_LL(ncclDevKerne...         0.00%       0.000us         0.00%       0.000us       0.000us     360.821ms        43.27%     360.821ms       5.155ms            70  
+                                        nccl:all_reduce         0.00%       0.000us         0.00%       0.000us       0.000us     360.821ms        43.27%     360.821ms       5.155ms            70  
+autograd::engine::evaluate_function: CompiledFunctio...         0.18%       1.655ms        14.12%     130.327ms       2.005ms       0.000us         0.00%     289.832ms       4.459ms            65  
+                               CompiledFunctionBackward         0.86%       7.982ms        13.94%     128.672ms       1.980ms       0.000us         0.00%     289.832ms       4.459ms            65  
+## Call CompiledFxGraph fkkiufqunvd2lph6dqvfordcbwas...         0.00%       0.000us         0.00%       0.000us       0.000us     267.258ms        32.05%     267.258ms       4.859ms            55  
+## Call CompiledFxGraph fkkiufqunvd2lph6dqvfordcbwas...         5.55%      51.220ms        11.54%     106.500ms       1.936ms       0.000us         0.00%     261.472ms       4.754ms            55  
+                                          ProfilerStep*        21.73%     200.635ms        80.35%     741.717ms     148.343ms       0.000us         0.00%     142.822ms      28.564ms             5  
+                                               aten::mm         1.48%      13.700ms         2.18%      20.170ms      27.629us     134.146ms        16.09%     134.146ms     183.761us           730  
+                             Torch-Compiled Region: 0/0         0.02%     140.475us        10.19%      94.073ms      18.815ms       0.000us         0.00%     104.680ms      20.936ms             5  
+                        DistributedDataParallel.forward         0.43%       4.015ms        10.18%      93.932ms      18.786ms       0.000us         0.00%     104.680ms      20.936ms             5  
+                             Torch-Compiled Region: 4/0         0.56%       5.156ms         9.51%      87.812ms      17.562ms       0.000us         0.00%     104.597ms      20.919ms             5  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 923.103ms
+Self CUDA time total: 833.939ms
+
